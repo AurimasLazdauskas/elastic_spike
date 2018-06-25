@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# Seed accounts
+100.times do
+  Account.create(name: Faker::Name.unique.name, email: Faker::Internet.unique.email,
+                 address: Faker::Address.street_address, balance: rand(0.0...15000).round(2))
+end
