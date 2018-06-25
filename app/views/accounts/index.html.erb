@@ -1,0 +1,14 @@
+Count: <%= @accounts.count %>
+
+<%= form_tag(accounts_path, method: :get) do %>
+    <%= text_field_tag :term %>
+    <%= submit_tag 'Search' %>
+<% end %>
+
+<% @accounts.each do |acc| %>
+    <h3>Name: <%= acc.name %></h3>
+    <b>Email:</b> <%= acc.email %><br/>
+    <b>Address:</b> <%= acc.address %><br/>
+    <b>Balance:</b> <%= acc.balance %><br/>
+    <br/><hr/>
+<% end %>
