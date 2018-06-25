@@ -1,7 +1,7 @@
 class AccountsController < ApplicationController
   def index
     @accounts = if params[:term]
-               Account.where('name LIKE ?', "%#{params[:term]}%")
+               Account.where(name: Elastic::Query.by_name(params[:term]))
              else
                Account.all
              end
