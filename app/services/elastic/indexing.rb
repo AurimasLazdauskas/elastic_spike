@@ -1,16 +1,19 @@
 module Elastic
   class Indexing
+    def initialize
+      @client = Elasticsearch::Client.new log: true
+    end
+
     def index
-      client = Elasticsearch::Client.new log: true
-
-      account = Account.first
-
-      client.index index: 'accounts', type: '_doc', id: 1,
-                   body: { name: account.name,
-                           email: account.email,
-                           address: account.address,
-                           balance: account.balance
-                   }
+      Account.all.map do |acc|
+        @client.index index: 'accounts', type: '_doc',
+                      body: {
+                        name: acc.name,
+                        email: acc.email,
+                        address: acc.address,
+                        balance: acc.balance
+                      }
+      end
     end
   end
 end
