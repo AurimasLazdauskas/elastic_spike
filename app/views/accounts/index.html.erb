@@ -1,4 +1,8 @@
-Count: <%= @accounts.count %>
+Count: <%= @accounts.count %><br/>
+<%= if @avg_balance
+      "Average balance: #{@avg_balance}"
+    end
+%>
 
 <%= form_tag(accounts_path, method: :get) do %>
     <%= text_field_tag :term %>
