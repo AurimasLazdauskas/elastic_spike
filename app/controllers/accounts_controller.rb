@@ -9,6 +9,12 @@ class AccountsController < ApplicationController
     end
   end
 
+  def balance_search
+    querier = Elastic::Query.new
+    @accounts = Account.where(name: querier.by_balance(params[:balance_from], params[:balance_to]))
+    render :index
+  end
+
   def edit
     @account = Account.find(params[:id])
   end

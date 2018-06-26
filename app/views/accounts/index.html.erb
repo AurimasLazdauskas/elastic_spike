@@ -30,6 +30,15 @@ Count: <%= @accounts.count %><br/>
         <%= submit_tag 'Search' %>
     <% end %>
   </div>
+
+  <div style="display: inline-block; margin: 30px;">
+    By balance (from : to):
+    <%= form_tag(balance_search_accounts_path, method: :get) do %>
+        <%= text_field_tag :balance_from %>
+        <%= text_field_tag :balance_to %>
+        <%= submit_tag 'Search' %>
+    <% end %>
+  </div>
 </div>
 
 <% @accounts.each do |acc| %>
