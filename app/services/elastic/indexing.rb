@@ -13,18 +13,23 @@ module Elastic
       map
 
       Account.all.map do |acc|
-        @client.index index: INDEX, type: TYPE,
-                      body: {
+        index_one(acc)
+      end
+    end
+
+    def index_one(acc)
+      @client.index index: INDEX, type: TYPE,
+                    id: acc.id,
+                    body: {
                         name: acc.name,
                         email: acc.email,
                         address: acc.address,
                         balance: acc.balance
-                      }
-      end
+                    }
     end
 
     def delete_index
-      @client.indices.delete index: INDEX
+      @client.indices.delete index: INDEX if @client.indices.exists? index: INDEX
     end
 
     def map

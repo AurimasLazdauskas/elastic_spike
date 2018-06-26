@@ -10,5 +10,6 @@ Count: <%= @accounts.count %>
     <b>Email:</b> <%= acc.email %><br/>
     <b>Address:</b> <%= acc.address %><br/>
     <b>Balance:</b> <%= acc.balance %><br/>
+    <%= link_to('edit', edit_account_path(acc)) %>
     <br/><hr/>
 <% end %>
