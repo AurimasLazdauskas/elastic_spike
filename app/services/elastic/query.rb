@@ -33,5 +33,35 @@ module Elastic
       @avg_balance = result['aggregations']['avg_balance']['value'].to_f
       @names = result['hits']['hits'].map { |h| h['_source']['name'] }
     end
+
+    def by_balance(from, to)
+      result = @client.search index: 'accounts', body:
+          {
+            size: 10000,
+            query: {
+              bool: {
+                filter: [
+                  {
+                    range: {
+                      balance: {
+                        lte: to,
+                        gte: from
+                      }.delete_if{ |k,v| v.blank? }
+                    }
+                  }
+                ]
+              }
+            },
+            aggs: {
+              avg_balance: {
+                avg: {
+                  field: :balance
+                }
+              }
+            }
+          }
+      @avg_balance = result['aggregations']['avg_balance']['value'].to_f
+      @names = result['hits']['hits'].map { |h| h['_source']['name'] }
+    end
   end
 end
