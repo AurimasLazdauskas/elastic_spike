@@ -4,16 +4,41 @@ Count: <%= @accounts.count %><br/>
     end
 %>
 
-<%= form_tag(accounts_path, method: :get) do %>
-    <%= text_field_tag :term %>
-    <%= submit_tag 'Search' %>
-<% end %>
+<div style="display: block">
+  <div style="display: inline-block; margin: 30px;">
+    By name:
+    <%= form_tag(accounts_path, method: :get) do %>
+        <%= text_field_tag :term %>
+        <%= hidden_field_tag :field, :name %>
+        <%= submit_tag 'Search' %>
+    <% end %>
+  </div>
+
+  <div style="display: inline-block; margin: 30px;">
+    By email:
+    <%= form_tag(accounts_path, method: :get) do %>
+        <%= text_field_tag :term %>
+        <%= hidden_field_tag :field, :email %>
+        <%= submit_tag 'Search' %>
+    <% end %>
+  </div>
+  <div style="display: inline-block; margin: 30px;">
+    By address:
+    <%= form_tag(accounts_path, method: :get) do %>
+        <%= text_field_tag :term %>
+        <%= hidden_field_tag :field, :address %>
+        <%= submit_tag 'Search' %>
+    <% end %>
+  </div>
+</div>
 
 <% @accounts.each do |acc| %>
-    <h3>Name: <%= acc.name %></h3>
-    <b>Email:</b> <%= acc.email %><br/>
-    <b>Address:</b> <%= acc.address %><br/>
-    <b>Balance:</b> <%= acc.balance %><br/>
-    <%= link_to('edit', edit_account_path(acc)) %>
-    <br/><hr/>
+    <div style="display: block">
+      <h3>Name: <%= acc.name %></h3>
+      <b>Email:</b> <%= acc.email %><br/>
+      <b>Address:</b> <%= acc.address %><br/>
+      <b>Balance:</b> <%= acc.balance %><br/>
+      <%= link_to('edit', edit_account_path(acc)) %>
+      <br/><hr/>
+    </div>
 <% end %>
