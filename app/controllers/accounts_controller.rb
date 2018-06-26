@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
   def index
     if params[:term]
       querier = Elastic::Query.new
-      @accounts = Account.where(name: querier.query(params[:field], params[:term]))
+      @accounts = querier.query(params[:field], params[:term]).map { |id| Account.find(id) }
       @avg_balance = querier.avg_balance
     else
       @accounts = Account.all
@@ -11,7 +11,11 @@ class AccountsController < ApplicationController
 
   def balance_search
     querier = Elastic::Query.new
-    @accounts = Account.where(name: querier.by_balance(params[:balance_from], params[:balance_to]))
+
+    @accounts = querier.by_balance(params[:balance_from],
+                                   params[:balance_to],
+                                   params[:sort]).map { |id| Account.find(id) }
+
     render :index
   end
 

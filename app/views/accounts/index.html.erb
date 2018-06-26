@@ -36,6 +36,10 @@ Count: <%= @accounts.count %><br/>
     <%= form_tag(balance_search_accounts_path, method: :get) do %>
         <%= text_field_tag :balance_from %>
         <%= text_field_tag :balance_to %>
+        Sort: asc
+        <%= radio_button_tag :sort, :asc, true %>
+        desc
+        <%= radio_button_tag :sort, :desc, false %>
         <%= submit_tag 'Search' %>
     <% end %>
   </div>
