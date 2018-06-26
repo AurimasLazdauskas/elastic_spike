@@ -10,12 +10,12 @@ module Elastic
       new.query(term)
     end
 
-    def query(term)
+    def query(field, term)
       result = @client.search index: 'accounts', body:
           {
             query: {
               match: {
-                name: {
+                field => {
                   query: term,
                   fuzziness: 2,
                   prefix_length: 1
