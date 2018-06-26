@@ -1,5 +1,7 @@
 module Elastic
   class Query
+    attr_accessor :names, :avg_balance
+
     def initialize
       @client = Elasticsearch::Client.new log: true
     end
@@ -19,9 +21,17 @@ module Elastic
                   prefix_length: 1
                 }
               }
+            },
+            aggs: {
+              avg_balance: {
+                avg: {
+                  field: :balance
+                }
+              }
             }
           }
-      result['hits']['hits'].map { |h| h['_source']['name'] }
+      @avg_balance = result['aggregations']['avg_balance']['value'].to_f
+      @names = result['hits']['hits'].map { |h| h['_source']['name'] }
     end
   end
 end

@@ -1,10 +1,12 @@
 class AccountsController < ApplicationController
   def index
-    @accounts = if params[:term]
-               Account.where(name: Elastic::Query.by_name(params[:term]))
-             else
-               Account.all
-             end
+    if params[:term]
+      querier = Elastic::Query.new
+      @accounts = Account.where(name: querier.query(params[:term]))
+      @avg_balance = querier.avg_balance
+    else
+      @accounts = Account.all
+    end
   end
 
   def edit
